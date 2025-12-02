@@ -10,31 +10,32 @@
     <div class="container">
         <h1>Notas Rápidas</h1>
 
-        <input type="text" id="notaTexto" placeholder="Digite sua nota aqui">
+        <label>Digite sua nota aqui:</label>
+        <input type="text" id="notaTexto">
 
         <div class="radios">
-            <label><input type="radio" name="urgencia" value="nao" checked> Não urgente</label>
-            <label><input type="radio" name="urgencia" value="sim"> Urgente</label>
+            <label><input type="radio" name="urgencia" value="rNaoUrgente" checked> Não urgente</label>
+            <label><input type="radio" name="urgencia" value="rUrgente"> Urgente</label>
         </div>
 
         <div class="acoes">
-            <button id="btnAdicionar">Adicionar</button>
-            <button id="btnApagarTudo">Apagar tudo</button>
+            <button type="button" id="btnAdicionar" onclick="adicionar()">Adicionar</button>
+            <button type="button" id="btnApagarTudo" onclick="apagarTudo()">Apagar tudo</button>
         </div>
 
         <div class="listas">
-            <div class="box nao-urgente-box">
+            <div id="naoUrgente">
                 <h2>Não Urgente</h2>
-                <ul id="listaNao"></ul>
+                <button type="button" onclick="excluir_nota_NU()">Apagar Notas</button>
             </div>
 
-            <div class="box urgente-box">
+            <div id="urgente">
                 <h2>Urgente</h2>
-                <ul id="listaUrgente"></ul>
+                <button type="button" onclick="excluir_nota_U()">Apagar Notas</button>
             </div>
         </div>
     </div>
-
-    <script src="js/notas.js"></script>
+    <script src="js/nota.js"></script>
 </body>
+</html>
 </html>
