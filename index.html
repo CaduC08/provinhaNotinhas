@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Notas Rápidas</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Notas Rápidas</h1>
+
+        <label>Digite sua nota aqui:</label>
+        <input type="text" id="notaTexto">
+
+        <div class="radios">
+            <label><input type="radio" name="urgencia" value="rNaoUrgente" checked> Não urgente</label>
+            <label><input type="radio" name="urgencia" value="rUrgente"> Urgente</label>
+        </div>
+
+        <div class="acoes">
+            <button type="button" id="btnAdicionar" onclick="adicionar()">Adicionar</button>
+            <button type="button" id="btnApagarTudo" onclick="apagarTudo()">Apagar tudo</button>
+        </div>
+
+        <div class="listas">
+            <div id="naoUrgente">
+                <h2>Não Urgente</h2>
+                <button type="button" onclick="excluir_nota_NU()">Apagar Notas</button>
+            </div>
+
+            <div id="urgente">
+                <h2>Urgente</h2>
+                <button type="button" onclick="excluir_nota_U()">Apagar Notas</button>
+            </div>
+        </div>
+    </div>
+    <script src="js/nota.js"></script>
+</body>
+</html>
