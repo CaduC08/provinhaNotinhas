@@ -1,63 +1,74 @@
-document.addEventListener('DOMContentLoaded', function() {
-    var input = document.getElementById('notaTexto');
-    var btnAdicionar = document.getElementById('btnAdicionar');
-    var btnApagarTudo = document.getElementById('btnApagarTudo');
-    var listaNao = document.getElementById('listaNao');
-    var listaUrgente = document.getElementById('listaUrgente');
+var colorCont = 0
 
-    var cores = ['cor-blue','cor-green','cor-purple'];
-    var indiceCor = 0;
+// insere nova nota
+function adicionar() {
+    var notaTexto = document.getElementById("notaTexto").value.trim()
+    var tipoSelecionado = document.querySelector('input[name="urgencia"]:checked')
 
-    btnAdicionar.addEventListener('click', function() {
-        var texto = input.value.trim();
-        if (!texto) return;
-        var radio = document.querySelector('input[name="urgencia"]:checked');
-        var isUrgente = radio && radio.value === 'sim';
-        adicionarNota(texto, isUrgente);
-        input.value = '';
-        
-        document.querySelector('input[name="urgencia"][value="nao"]').checked = true;
-    });
-
-    function adicionarNota(texto, isUrgente) {
-        var li = document.createElement('li');
-        li.className = 'nota';
-
-        var span = document.createElement('span');
-        span.textContent = texto;
-
-       
-        if (!isUrgente) {
-            span.classList.add(cores[indiceCor]);
-        }
-
-        var btnRemover = document.createElement('button');
-        btnRemover.textContent = 'Remover';
-        btnRemover.className = 'remover';
-        btnRemover.addEventListener('click', function() {
-            var parent = li.parentNode;
-            if (parent) parent.removeChild(li);
-        });
-
-        li.appendChild(span);
-        li.appendChild(btnRemover);
-
-        if (isUrgente) {
-            listaUrgente.appendChild(li);
-        } else {
-            listaNao.appendChild(li);
-        }
-
-        indiceCor = (indiceCor + 1) % cores.length;
+    if (!notaTexto) {
+        alert("Não há nota para inserir")
+        return // sai da função se o texto estiver vazio
     }
 
-    btnApagarTudo.addEventListener('click', function() {
-        listaNao.innerHTML = '';
-        listaUrgente.innerHTML = '';
-        indiceCor = 0;
-    });
+    var tipo = tipoSelecionado.value
+    var novo = document.createElement("p")
+    novo.textContent = notaTexto
 
-    input.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') btnAdicionar.click();
-    });
-});
+    // ID único para cada nota
+    novo.id = `nota_${tipo}_${Date.now()}`
+
+    // alternar cores
+    if (colorCont === 0) {
+        novo.style.color = "blue"
+        colorCont = 1
+    } else if (colorCont === 1) {
+        novo.style.color = "green"
+        colorCont = 2
+    } else {
+        novo.style.color = "purple"
+        colorCont = 0
+    }
+
+    var destino = tipo
+    if(destino === "rNaoUrgente"){
+        document.getElementById("naoUrgente").append(novo)
+    } else {
+        document.getElementById("urgente").append(novo)
+    }
+    // limpa o campo de texto
+    document.getElementById("notaTexto").value = ""
+}
+
+// excluir uma nota não urgente
+function excluir_nota_NU() {
+    var notas = document.querySelectorAll("#naoUrgente p")
+    if (notas.length > 0) {
+        notas[notas.length - 1].remove()
+    } else {
+        alert("Não há notas para remover")
+    }
+}
+
+// excluir uma nota urgente
+function excluir_nota_U() {
+    var notas = document.querySelectorAll("#urgente p")
+    if (notas.length > 0) {
+        notas[notas.length - 1].remove()
+    } else {
+        alert("Não há notas para remover")
+    }
+}
+
+// excluir todas as notas
+function apagarTudo(){
+    var listaNao = document.querySelectorAll("#naoUrgente p")
+    var listaUrgente = document.querySelectorAll("#urgente p")
+    if(listaNao.length == 0 && listaUrgente.length == 0){
+        alert("Não há notas para remover")
+    }
+    else {
+        listaNao.forEach(listaNao => listaNao.remove())
+        listaUrgente.forEach(listaUrgente => listaUrgente.remove())
+    }
+}
+
